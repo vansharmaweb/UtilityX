@@ -1,6 +1,10 @@
 {
   // UtilityX — Cloudflare Workers/Pages wrangler config
   "name": "utilityx",
+  "compatibility_date": "2026-04-18",
+  "assets": {
+    "directory": "./"
+  },
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,

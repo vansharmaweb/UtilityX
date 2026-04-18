@@ -182,20 +182,20 @@ const DEFAULT_APPS = [
 let appRegistry = loadRegistry();
 
 function loadRegistry() {
-  let reg = JSON.parse(JSON.stringify(DEFAULT_APPS));
   try {
     const saved = localStorage.getItem('ux_registry');
     if (saved) {
       let savedParsed = JSON.parse(saved);
+      // Deep-copy any DEFAULT_APPS missing from the saved registry
       DEFAULT_APPS.forEach(da => {
         if (!savedParsed.find(s => s.id === da.id)) {
-          savedParsed.push(da);
+          savedParsed.push(JSON.parse(JSON.stringify(da)));
         }
       });
-      reg = savedParsed;
+      return savedParsed;
     }
   } catch(e) {}
-  return reg;
+  return JSON.parse(JSON.stringify(DEFAULT_APPS));
 }
 
 function saveRegistry() {
@@ -407,7 +407,7 @@ document.addEventListener('keydown', e => {
 // ─────────────────────────────────────────────
 // ADMIN PANEL
 // ─────────────────────────────────────────────
-const ADMIN_PASS = '2511219';
+let ADMIN_PASS = localStorage.getItem('ux_admin_pass') || '2511219';
 let adminUnlocked = false;
 
 function openAdmin() {
@@ -450,6 +450,7 @@ function showAdminDashboard() {
   document.getElementById('adminDashboard').style.display = 'block';
   switchAdminTab('apps');
   renderAdminAppsList();
+  updateAdminStats();
 }
 
 function switchAdminTab(tab) {
@@ -459,27 +460,57 @@ function switchAdminTab(tab) {
   document.getElementById('atcontent-' + tab).classList.add('active');
 }
 
+// Search & filter state
+let adminSearchQuery = '';
+let adminCatFilterVal = '';
+
+function filterAdminApps() {
+  adminSearchQuery = document.getElementById('adminSearch')?.value?.toLowerCase() || '';
+  adminCatFilterVal = document.getElementById('adminCatFilter')?.value || '';
+  renderAdminAppsList();
+}
+
 function renderAdminAppsList() {
   const list = document.getElementById('adminAppsList');
-  list.innerHTML = appRegistry.map((app, i) => {
+  if (!list) return;
+  updateAdminStats();
+
+  let filtered = [...appRegistry];
+  if (adminSearchQuery) {
+    filtered = filtered.filter(a =>
+      a.name.toLowerCase().includes(adminSearchQuery) ||
+      a.desc.toLowerCase().includes(adminSearchQuery) ||
+      (a.tags || []).some(t => t.toLowerCase().includes(adminSearchQuery))
+    );
+  }
+  if (adminCatFilterVal) {
+    filtered = filtered.filter(a => a.category === adminCatFilterVal);
+  }
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text3);font-size:0.82rem;">No apps match your search.</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map((app) => {
     const isVisible = app.visible !== false;
     const isCustom = !DEFAULT_APPS.find(d => d.id === app.id);
     const isPinned = !!app.adminPinned;
     return `
-      <div class="admin-app-item">
-        <div class="admin-app-icon">${app.icon}</div>
+      <div class="admin-app-item ${isVisible ? '' : 'admin-app-hidden'}">
+        <div class="admin-app-icon" style="background:${app.color}18;border-color:${app.color}44">${app.icon}</div>
         <div class="admin-app-info">
           <div class="admin-app-name">${app.name}</div>
-          <div class="admin-app-cat">${getCategoryLabel(app.category)} · ${app.type === 'website' ? '🔗 Website' : '⚙️ Built-in'}</div>
+          <div class="admin-app-meta">
+            <span class="admin-cat-badge">${getCategoryLabel(app.category)}</span>
+            <span class="admin-type-badge ${app.type === 'website' ? 'ext' : ''}">${app.type === 'website' ? '🔗 Website' : '⚙️ Built-in'}</span>
+            ${isCustom ? '<span class="admin-custom-badge">Custom</span>' : ''}
+          </div>
         </div>
         <div class="admin-app-actions">
-          <button class="toggle-btn ${isPinned ? 'visible' : ''}" onclick="toggleAppAdminPin('${app.id}')">
-            ${isPinned ? '🌟 Unpin' : '📌 Pin'}
-          </button>
-          <button class="toggle-btn ${isVisible ? 'visible' : 'hidden'}" onclick="toggleAppVisibility('${app.id}')">
-            ${isVisible ? '👁 Visible' : '🚫 Hidden'}
-          </button>
-          ${isCustom ? `<button class="delete-btn" onclick="deleteApp('${app.id}')">🗑</button>` : ''}
+          <button class="admin-icon-btn ${isPinned ? 'pinned' : ''}" onclick="toggleAppAdminPin('${app.id}')" title="${isPinned ? 'Unpin' : 'Promote'}">${isPinned ? '🌟' : '📌'}</button>
+          <button class="admin-icon-btn ${isVisible ? 'vis' : 'hid'}" onclick="toggleAppVisibility('${app.id}')" title="${isVisible ? 'Hide app' : 'Show app'}">${isVisible ? '👁' : '🚫'}</button>
+          ${isCustom ? `<button class="admin-icon-btn del" onclick="deleteApp('${app.id}')" title="Delete">🗑</button>` : ''}
         </div>
       </div>`;
   }).join('');
@@ -564,7 +595,108 @@ function addNewApp() {
   okEl.style.display = 'block';
   setTimeout(() => okEl.style.display = 'none', 3000);
 
+  updateAdminStats();
   switchAdminTab('apps');
+}
+
+// ─────────────────────────────────────────────
+// ADMIN UTILITIES
+// ─────────────────────────────────────────────
+function updateAdminStats() {
+  const total   = appRegistry.length;
+  const visible = appRegistry.filter(a => a.visible !== false).length;
+  const hidden  = appRegistry.filter(a => a.visible === false).length;
+  const pinned  = appRegistry.filter(a => a.adminPinned).length;
+  const setEl = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+  setEl('statTotal', total); setEl('statVisible', visible);
+  setEl('statHidden', hidden); setEl('statPinned', pinned);
+}
+
+function showAllApps() {
+  appRegistry.forEach(a => { a.visible = true; });
+  saveRegistry(); renderApps(); renderAdminAppsList();
+  showToast('All apps are now visible!');
+}
+
+function hideAllApps() {
+  if (!confirm('Hide all apps from the grid?')) return;
+  appRegistry.forEach(a => { a.visible = false; });
+  saveRegistry(); renderApps(); renderAdminAppsList();
+  showToast('All apps hidden!');
+}
+
+function syncDefaultApps() {
+  let added = 0;
+  DEFAULT_APPS.forEach(da => {
+    if (!appRegistry.find(a => a.id === da.id)) {
+      appRegistry.push(JSON.parse(JSON.stringify(da)));
+      added++;
+    }
+  });
+  saveRegistry(); renderApps(); renderAdminAppsList();
+  showToast(added > 0 ? `✅ Added ${added} missing app(s)!` : '✅ Already in sync!');
+}
+
+function syncOnLoad() {
+  let changed = false;
+  DEFAULT_APPS.forEach(da => {
+    if (!appRegistry.find(a => a.id === da.id)) {
+      appRegistry.push(JSON.parse(JSON.stringify(da)));
+      changed = true;
+    }
+  });
+  if (changed) { saveRegistry(); renderApps(); }
+}
+
+function exportRegistry() {
+  const json = JSON.stringify(appRegistry, null, 2);
+  navigator.clipboard.writeText(json)
+    .then(() => showToast('Registry copied to clipboard!'))
+    .catch(() => {
+      const w = window.open('', '_blank');
+      if (w) { w.document.write('<pre style="font-family:monospace;font-size:13px">' + json + '</pre>'); }
+    });
+}
+
+function resetRegistry() {
+  if (!confirm('Reset all apps to defaults? All custom apps and visibility changes will be lost.')) return;
+  localStorage.removeItem('ux_registry');
+  localStorage.removeItem('ux_user_pinned');
+  appRegistry = JSON.parse(JSON.stringify(DEFAULT_APPS));
+  saveRegistry(); renderApps(); renderAdminAppsList();
+  showToast('Registry reset to defaults!');
+}
+
+function importRegistry() {
+  const json = document.getElementById('importJson')?.value;
+  const msg  = document.getElementById('importMsg');
+  if (!json || !json.trim()) return;
+  try {
+    const parsed = JSON.parse(json);
+    if (!Array.isArray(parsed)) throw new Error('Not an array');
+    appRegistry = parsed;
+    saveRegistry(); renderApps(); renderAdminAppsList();
+    if (msg) { msg.style.display='block'; msg.className='admin-success'; msg.textContent='✅ Registry imported!'; }
+    setTimeout(() => { if (msg) msg.style.display='none'; }, 3000);
+  } catch(e) {
+    if (msg) { msg.style.display='block'; msg.className='admin-error'; msg.textContent='❌ Invalid JSON format.'; }
+  }
+}
+
+function changeAdminPass() {
+  const p1  = document.getElementById('newPass1')?.value;
+  const p2  = document.getElementById('newPass2')?.value;
+  const msg = document.getElementById('passChangeMsg');
+  if (!p1 || p1.length < 4) {
+    if (msg) { msg.style.display='block'; msg.className='admin-error'; msg.textContent='❌ Min 4 characters required.'; } return;
+  }
+  if (p1 !== p2) {
+    if (msg) { msg.style.display='block'; msg.className='admin-error'; msg.textContent='❌ Passwords don\'t match.'; } return;
+  }
+  ADMIN_PASS = p1;
+  localStorage.setItem('ux_admin_pass', p1);
+  if (msg) { msg.style.display='block'; msg.className='admin-success'; msg.textContent='✅ Password updated!'; }
+  setTimeout(() => { if (msg) msg.style.display='none'; }, 3000);
 }
 
 // ─────────────────────────────────────────────
@@ -1023,11 +1155,7 @@ function calcAge() {
 // ─────────────────────────────────────────────
 applyTheme();
 renderApps();
-
-// Default admin fields
-document.getElementById('newAppColor').addEventListener('input', function() {
-  document.getElementById('newAppColorHex').value = this.value;
-});
+syncOnLoad(); // Silently add any DEFAULT_APPS missing from the saved registry
 
 // ─────────────────────────────────────────────
 // QR GENERATOR

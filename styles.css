@@ -356,7 +356,7 @@ header {
   background: var(--modal-bg);
   border: 1px solid var(--border);
   border-radius: 24px;
-  width: 100%; max-width: 560px;
+  width: 100%; max-width: 600px;
   max-height: 90vh;
   display: flex; flex-direction: column;
   animation: slideUp 0.3s cubic-bezier(0.4,0,0.2,1);
@@ -402,7 +402,72 @@ select.admin-input option { background: var(--bg2); }
   background: var(--bg3); margin-bottom: 8px; transition: border-color 0.2s;
 }
 .admin-app-item:hover { border-color: var(--text3); }
-.admin-app-icon { font-size: 1.3rem; flex-shrink: 0; }
+.admin-app-icon {
+  width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.15rem; flex-shrink: 0;
+}
+
+/* ── ENHANCED ADMIN ── */
+.admin-stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 1px solid var(--border); flex-shrink: 0;
+}
+.admin-stat-item {
+  padding: 14px 8px; text-align: center; display: flex;
+  flex-direction: column; gap: 3px;
+  border-right: 1px solid var(--border); background: var(--bg3);
+}
+.admin-stat-item:last-child { border-right: none; }
+.admin-stat-val {
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.35rem;
+  font-weight: 800; color: var(--accent); line-height: 1;
+}
+.admin-stat-val.green { color: var(--accent3); }
+.admin-stat-val.red   { color: var(--accent2); }
+.admin-stat-val.amber { color: #f5a06a; }
+.admin-stat-lbl { font-size: 0.57rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); }
+
+.admin-search-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
+.admin-search-row .admin-input { flex: 1; }
+
+.admin-bulk-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.btn-ghost-sm {
+  padding: 5px 11px; border-radius: 8px; background: var(--bg3);
+  border: 1px solid var(--border); color: var(--text3);
+  font-family: 'DM Mono', monospace; font-size: 0.63rem;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.btn-ghost-sm:hover { border-color: var(--accent); color: var(--accent); }
+
+.admin-app-item.admin-app-hidden { opacity: 0.42; }
+.admin-app-meta { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 4px; }
+.admin-cat-badge, .admin-type-badge, .admin-custom-badge {
+  font-size: 0.57rem; padding: 2px 7px; border-radius: 50px;
+  border: 1px solid var(--border); color: var(--text3); background: var(--bg2);
+}
+.admin-custom-badge { color: var(--accent2); border-color: rgba(245,106,106,0.35); background: rgba(245,106,106,0.07); }
+.admin-type-badge.ext { color: var(--accent3); border-color: rgba(106,245,192,0.35); background: rgba(106,245,192,0.07); }
+
+.admin-icon-btn {
+  width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--bg2); cursor: pointer; display: flex; align-items: center;
+  justify-content: center; font-size: 0.85rem; transition: all 0.2s; flex-shrink: 0;
+}
+.admin-icon-btn:hover { border-color: var(--text2); transform: scale(1.06); }
+.admin-icon-btn.vis    { border-color: rgba(106,245,192,0.5); }
+.admin-icon-btn.hid    { border-color: rgba(245,106,106,0.5); }
+.admin-icon-btn.pinned { border-color: rgba(245,160,106,0.55); background: rgba(245,160,106,0.07); }
+.admin-icon-btn.del:hover { border-color: var(--accent2); background: rgba(245,106,106,0.07); }
+
+.admin-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.admin-action-btn {
+  padding: 11px 10px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--bg3); color: var(--text2); font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.admin-action-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(124,106,245,0.05); }
+.admin-action-btn.danger:hover { border-color: var(--accent2); color: var(--accent2); background: rgba(245,106,106,0.05); }
 .admin-app-info { flex: 1; min-width: 0; }
 .admin-app-name { font-size: 0.85rem; color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; }
 .admin-app-cat { font-size: 0.68rem; color: var(--text3); margin-top: 2px; }

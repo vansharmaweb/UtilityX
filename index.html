@@ -122,20 +122,55 @@
 
     <!-- Admin Dashboard (shown after login) -->
     <div id="adminDashboard" style="display:none">
-      <div class="admin-tabs">
-        <button class="admin-tab active" onclick="switchAdminTab('apps')" id="atab-apps">Manage Apps</button>
-        <button class="admin-tab" onclick="switchAdminTab('add')" id="atab-add">Add New App</button>
-      </div>
 
-      <!-- Manage Apps Tab -->
-      <div class="admin-tab-content active" id="atcontent-apps">
-        <div class="admin-section">
-          <div class="admin-label">All Apps — toggle visibility</div>
-          <div id="adminAppsList"></div>
+      <!-- ── Stats Bar ── -->
+      <div class="admin-stats-bar">
+        <div class="admin-stat-item">
+          <span class="admin-stat-val" id="statTotal">–</span>
+          <span class="admin-stat-lbl">Total</span>
+        </div>
+        <div class="admin-stat-item">
+          <span class="admin-stat-val green" id="statVisible">–</span>
+          <span class="admin-stat-lbl">Visible</span>
+        </div>
+        <div class="admin-stat-item">
+          <span class="admin-stat-val red" id="statHidden">–</span>
+          <span class="admin-stat-lbl">Hidden</span>
+        </div>
+        <div class="admin-stat-item">
+          <span class="admin-stat-val amber" id="statPinned">–</span>
+          <span class="admin-stat-lbl">Pinned</span>
         </div>
       </div>
 
-      <!-- Add App Tab -->
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="switchAdminTab('apps')" id="atab-apps">📋 Apps</button>
+        <button class="admin-tab" onclick="switchAdminTab('add')" id="atab-add">➕ Add</button>
+        <button class="admin-tab" onclick="switchAdminTab('settings')" id="atab-settings">⚙️ Settings</button>
+      </div>
+
+      <!-- ── Manage Apps Tab ── -->
+      <div class="admin-tab-content active" id="atcontent-apps">
+        <div class="admin-search-row">
+          <input type="text" id="adminSearch" class="admin-input" placeholder="🔍 Search apps..." oninput="filterAdminApps()">
+          <select id="adminCatFilter" class="admin-input" onchange="filterAdminApps()" style="width:auto;min-width:130px">
+            <option value="">All Categories</option>
+            <option value="calculator">Calculators</option>
+            <option value="converter">Converters</option>
+            <option value="generator">Generators</option>
+            <option value="utility">Utilities</option>
+            <option value="project">Projects</option>
+          </select>
+        </div>
+        <div class="admin-bulk-row">
+          <button class="btn-ghost-sm" onclick="showAllApps()">👁 Show All</button>
+          <button class="btn-ghost-sm" onclick="hideAllApps()">🚫 Hide All</button>
+          <button class="btn-ghost-sm" onclick="syncDefaultApps()">🔄 Sync Defaults</button>
+        </div>
+        <div id="adminAppsList"></div>
+      </div>
+
+      <!-- ── Add App Tab ── -->
       <div class="admin-tab-content" id="atcontent-add">
         <div class="admin-section">
           <div class="admin-label">App Icon (emoji)</div>
@@ -149,22 +184,24 @@
           <div class="admin-label">Short Description</div>
           <input type="text" id="newAppDesc" class="admin-input" placeholder="e.g. Track your monthly expenses">
         </div>
-        <div class="admin-section">
-          <div class="admin-label">Category</div>
-          <select id="newAppCategory" class="admin-input">
-            <option value="calculator">Calculator</option>
-            <option value="converter">Converter</option>
-            <option value="generator">Generator</option>
-            <option value="utility">Utility</option>
-            <option value="project">My Projects</option>
-          </select>
-        </div>
-        <div class="admin-section">
-          <div class="admin-label">App Type</div>
-          <select id="newAppType" class="admin-input" onchange="toggleAppTypeFields()">
-            <option value="website">External Website / URL</option>
-            <option value="builtin">Built-in Tool</option>
-          </select>
+        <div style="display:flex;gap:10px;margin-bottom:16px">
+          <div style="flex:1">
+            <div class="admin-label">Category</div>
+            <select id="newAppCategory" class="admin-input">
+              <option value="calculator">Calculator</option>
+              <option value="converter">Converter</option>
+              <option value="generator">Generator</option>
+              <option value="utility">Utility</option>
+              <option value="project">My Projects</option>
+            </select>
+          </div>
+          <div style="flex:1">
+            <div class="admin-label">App Type</div>
+            <select id="newAppType" class="admin-input" onchange="toggleAppTypeFields()">
+              <option value="website">🔗 External URL</option>
+              <option value="builtin">⚙️ Built-in</option>
+            </select>
+          </div>
         </div>
         <div id="websiteFields">
           <div class="admin-section">
@@ -187,7 +224,33 @@
         <div class="admin-error" id="addAppError" style="display:none;margin-top:8px"></div>
         <div class="admin-success" id="addAppSuccess" style="display:none;margin-top:8px"></div>
       </div>
+
+      <!-- ── Settings Tab ── -->
+      <div class="admin-tab-content" id="atcontent-settings">
+        <div class="admin-section">
+          <div class="admin-label">Registry Management</div>
+          <div class="admin-action-grid">
+            <button class="admin-action-btn" onclick="exportRegistry()">📤 Export JSON</button>
+            <button class="admin-action-btn danger" onclick="resetRegistry()">🔄 Reset Defaults</button>
+          </div>
+        </div>
+        <div class="admin-section">
+          <div class="admin-label">Import Registry (JSON)</div>
+          <textarea id="importJson" class="admin-input" rows="4" placeholder="Paste exported registry JSON here..." style="resize:vertical;font-size:0.72rem;font-family:'DM Mono',monospace"></textarea>
+          <button class="btn btn-secondary" style="width:100%;margin-top:8px" onclick="importRegistry()">📥 Import</button>
+          <div id="importMsg" style="display:none;margin-top:8px"></div>
+        </div>
+        <div class="admin-section">
+          <div class="admin-label">Change Admin Password</div>
+          <input type="password" id="newPass1" class="admin-input" placeholder="New Password" style="margin-bottom:8px">
+          <input type="password" id="newPass2" class="admin-input" placeholder="Confirm Password">
+          <button class="btn btn-secondary" style="width:100%;margin-top:8px" onclick="changeAdminPass()">🔑 Update Password</button>
+          <div id="passChangeMsg" style="display:none;margin-top:8px"></div>
+        </div>
+      </div>
+
     </div>
+
   </div>
 </div>
 

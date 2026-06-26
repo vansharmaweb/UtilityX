@@ -1,5 +1,5 @@
 /* ─────────────────────────────────────────────
-   UTILITYX — app.js
+   UTILITYX — app.js  (v2 — Neon Reboot)
    App registry, card rendering, modal system,
    admin panel, and all tool logic
    ───────────────────────────────────────────── */
@@ -15,7 +15,7 @@ const DEFAULT_APPS = [
     desc: 'Fast arithmetic with keyboard support and expression memory.',
     category: 'calculator',
     type: 'builtin',
-    color: '#7c6af5',
+    color: '#00d2ff',
     tags: ['math', 'arithmetic'],
     visible: true,
     builtinKey: 'calc'
@@ -27,7 +27,7 @@ const DEFAULT_APPS = [
     desc: 'Trigonometry, logarithms, factorials, and more scientific functions.',
     category: 'calculator',
     type: 'builtin',
-    color: '#a06af5',
+    color: '#a855f7',
     tags: ['math', 'science', 'engineering'],
     visible: true,
     builtinKey: 'sci'
@@ -39,7 +39,7 @@ const DEFAULT_APPS = [
     desc: 'Convert Length, Weight, Temp, Volume, Speed, Area & Data instantly.',
     category: 'converter',
     type: 'builtin',
-    color: '#6a9ff5',
+    color: '#38bdf8',
     tags: ['units', 'measurement', 'convert'],
     visible: true,
     builtinKey: 'unit'
@@ -63,10 +63,22 @@ const DEFAULT_APPS = [
     desc: 'Convert between Binary, Octal, Decimal and Hexadecimal.',
     category: 'converter',
     type: 'builtin',
-    color: '#6af5c0',
+    color: '#22d3a5',
     tags: ['binary', 'hex', 'programming'],
     visible: true,
     builtinKey: 'base'
+  },
+  {
+    id: 'kmap',
+    icon: '🧮',
+    name: 'Karnaugh Map Solver',
+    desc: 'Simplify boolean expressions using K-Maps for up to 5 variables (with Don\'t Cares).',
+    category: 'calculator',
+    type: 'builtin',
+    color: '#00C3FF',
+    tags: ['math', 'boolean', 'kmap', 'logic'],
+    visible: true,
+    builtinKey: 'kmap'
   },
   {
     id: 'color',
@@ -75,7 +87,7 @@ const DEFAULT_APPS = [
     desc: 'Convert between HEX, RGB, and HSL color formats with live preview.',
     category: 'utility',
     type: 'builtin',
-    color: '#f56a9a',
+    color: '#ff4f7b',
     tags: ['design', 'css', 'color'],
     visible: true,
     builtinKey: 'color'
@@ -123,7 +135,7 @@ const DEFAULT_APPS = [
     desc: 'Calculate exact age in years, months, days plus next birthday countdown.',
     category: 'calculator',
     type: 'builtin',
-    color: '#f56a6a',
+    color: '#ff4f7b',
     tags: ['age', 'birthday', 'date'],
     visible: true,
     builtinKey: 'age'
@@ -135,7 +147,7 @@ const DEFAULT_APPS = [
     desc: 'Generate downloadable QR codes from links, text, or Wi-Fi strings instantly.',
     category: 'generator',
     type: 'builtin',
-    color: '#6aa3f5',
+    color: '#38bdf8',
     tags: ['qr', 'code', 'link'],
     visible: true,
     builtinKey: 'qr'
@@ -147,7 +159,7 @@ const DEFAULT_APPS = [
     desc: 'Boost productivity with a clean 25-minute work and 5-minute break timer.',
     category: 'utility',
     type: 'builtin',
-    color: '#f56a6a',
+    color: '#ff4f7b',
     tags: ['time', 'focus', 'productivity'],
     visible: true,
     builtinKey: 'pomo'
@@ -164,6 +176,79 @@ const DEFAULT_APPS = [
     visible: true,
     builtinKey: 'json'
   },
+  // ── NEW TOOLS ──
+  {
+    id: 'lorem',
+    icon: '🔤',
+    name: 'Lorem Ipsum',
+    desc: 'Generate placeholder text by paragraphs, sentences, or words count.',
+    category: 'generator',
+    type: 'builtin',
+    color: '#a855f7',
+    tags: ['text', 'placeholder', 'design'],
+    visible: true,
+    builtinKey: 'lorem'
+  },
+  {
+    id: 'tempconv',
+    icon: '🌡️',
+    name: 'Temperature Converter',
+    desc: 'Instantly convert between Celsius, Fahrenheit, and Kelvin with a live slider.',
+    category: 'converter',
+    type: 'builtin',
+    color: '#ff6b35',
+    tags: ['temperature', 'celsius', 'fahrenheit', 'kelvin'],
+    visible: true,
+    builtinKey: 'tempconv'
+  },
+  {
+    id: 'urlenc',
+    icon: '🔗',
+    name: 'URL Encoder / Decoder',
+    desc: 'Encode or decode any URL string with a single click.',
+    category: 'utility',
+    type: 'builtin',
+    color: '#00d2ff',
+    tags: ['url', 'encode', 'decode', 'web'],
+    visible: true,
+    builtinKey: 'urlenc'
+  },
+  {
+    id: 'worldclock',
+    icon: '⏰',
+    name: 'World Clock',
+    desc: 'Live time display for 8 major cities with analog ring clocks.',
+    category: 'utility',
+    type: 'builtin',
+    color: '#38bdf8',
+    tags: ['time', 'timezone', 'clock', 'world'],
+    visible: true,
+    builtinKey: 'worldclock'
+  },
+  {
+    id: 'tip',
+    icon: '📊',
+    name: 'Tip Calculator',
+    desc: 'Calculate tip, total bill, and per-person split with a live slider.',
+    category: 'calculator',
+    type: 'builtin',
+    color: '#22d3a5',
+    tags: ['tip', 'restaurant', 'split', 'bill'],
+    visible: true,
+    builtinKey: 'tip'
+  },
+  {
+    id: 'imgbase64',
+    icon: '🖼️',
+    name: 'Image → Base64',
+    desc: 'Drag & drop any image to instantly convert it to a Base64 data URL.',
+    category: 'utility',
+    type: 'builtin',
+    color: '#f5a06a',
+    tags: ['image', 'base64', 'convert', 'encode'],
+    visible: true,
+    builtinKey: 'imgbase64'
+  },
   {
     id: 'dev',
     icon: '👨‍💻',
@@ -171,7 +256,7 @@ const DEFAULT_APPS = [
     desc: 'Creator profile, background details, and links to connect.',
     category: 'project',
     type: 'builtin',
-    color: '#7c6af5',
+    color: '#00d2ff',
     tags: ['profile', 'about', 'credits'],
     visible: true,
     builtinKey: 'dev'
@@ -186,7 +271,6 @@ function loadRegistry() {
     const saved = localStorage.getItem('ux_registry');
     if (saved) {
       let savedParsed = JSON.parse(saved);
-      // Deep-copy any DEFAULT_APPS missing from the saved registry
       DEFAULT_APPS.forEach(da => {
         if (!savedParsed.find(s => s.id === da.id)) {
           savedParsed.push(JSON.parse(JSON.stringify(da)));
@@ -229,21 +313,21 @@ function toggleUserPin(id, event) {
   renderApps();
 }
 
-// ─────────────────────────────────────────────
-// THEME
-// ─────────────────────────────────────────────
-let isDark = localStorage.getItem('ux_theme') !== 'light';
 
-function applyTheme() {
-  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
-  document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
-}
+// ─────────────────────────────────────────────
+// HERO SEARCH
+// ─────────────────────────────────────────────
+let heroSearchQuery = '';
 
-function toggleTheme() {
-  isDark = !isDark;
-  localStorage.setItem('ux_theme', isDark ? 'dark' : 'light');
-  applyTheme();
+function searchApps(query) {
+  heroSearchQuery = (query || '').toLowerCase().trim();
+  // Reset category filter pills when searching
+  if (heroSearchQuery) {
+    activeFilter = 'all';
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('[data-filter="all"]').classList.add('active');
+  }
+  renderApps();
 }
 
 // ─────────────────────────────────────────────
@@ -265,19 +349,31 @@ function getBadgeClass(app) {
 function renderApps() {
   const grid = document.getElementById('appsGrid');
   const empty = document.getElementById('emptyState');
-  const filtered = appRegistry.filter(a =>
-    (activeFilter === 'all' || a.category === activeFilter)
-  );
 
-  const visible = filtered.filter(a => a.visible !== false);
+  let filtered = appRegistry.filter(a => a.visible !== false);
+
+  // Category filter
+  if (activeFilter !== 'all') {
+    filtered = filtered.filter(a => a.category === activeFilter);
+  }
+
+  // Hero search filter
+  if (heroSearchQuery) {
+    filtered = filtered.filter(a =>
+      a.name.toLowerCase().includes(heroSearchQuery) ||
+      a.desc.toLowerCase().includes(heroSearchQuery) ||
+      (a.tags || []).some(t => t.toLowerCase().includes(heroSearchQuery)) ||
+      getCategoryLabel(a.category).toLowerCase().includes(heroSearchQuery)
+    );
+  }
+
   const userPins = getUserPins();
 
-  visible.sort((a, b) => {
+  filtered.sort((a, b) => {
     const aUserPin = userPins.includes(a.id);
     const bUserPin = userPins.includes(b.id);
     const aAdminPin = !!a.adminPinned;
     const bAdminPin = !!b.adminPinned;
-
     if (aUserPin && !bUserPin) return -1;
     if (!aUserPin && bUserPin) return 1;
     if (aAdminPin && !bAdminPin) return -1;
@@ -285,30 +381,31 @@ function renderApps() {
     return 0;
   });
 
-  document.getElementById('appCount').textContent = appRegistry.filter(a => a.visible !== false).length;
+  // Update hero stat count (always total visible)
+  const totalVisible = appRegistry.filter(a => a.visible !== false).length;
+  document.getElementById('appCount').textContent = totalVisible;
 
-  if (visible.length === 0) {
+  if (filtered.length === 0) {
     grid.innerHTML = '';
     empty.style.display = 'block';
     return;
   }
   empty.style.display = 'none';
 
-  grid.innerHTML = visible.map((app, i) => {
+  grid.innerHTML = filtered.map((app, i) => {
     const isUserPinned = userPins.includes(app.id);
     const badgeClass = getBadgeClass(app);
     const badgeLabel = app.type === 'website' ? '🔗 Website' : getCategoryLabel(app.category);
     const typeIcon = app.type === 'website' ? '↗' : '▶';
     const tags = (app.tags || []).slice(0, 3).map(t => `<span class="card-tag">${t}</span>`).join('');
-    
     const promotedBadge = app.adminPinned ? `<span class="admin-promoted-badge">🌟 Promoted</span>` : '';
 
     return `
-      <div class="app-card" onclick="openApp('${app.id}')" style="--card-accent:${app.color};animation-delay:${i*0.04}s">
+      <div class="app-card" onclick="openApp('${app.id}')" style="--card-accent:${app.color};animation-delay:${i * 0.04}s">
         <button class="card-pin-btn ${isUserPinned ? 'pinned' : ''}" onclick="toggleUserPin('${app.id}', event)" title="${isUserPinned ? 'Unpin' : 'Pin app (max 3)'}">📌</button>
         <div class="card-top">
           <div class="card-icon-wrap" style="background:${app.color}18;border-color:${app.color}33">${app.icon}</div>
-          <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; position:relative; z-index:2;">
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:6px;position:relative;z-index:2;">
             ${promotedBadge}
             <span class="card-badge ${badgeClass}">${badgeLabel}</span>
           </div>
@@ -328,6 +425,10 @@ function renderApps() {
 
 function filterApps(category) {
   activeFilter = category;
+  // Clear hero search when changing filter
+  heroSearchQuery = '';
+  const searchEl = document.getElementById('heroSearch');
+  if (searchEl) searchEl.value = '';
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`[data-filter="${category}"]`).classList.add('active');
   renderApps();
@@ -364,13 +465,16 @@ function openApp(id) {
       const clone = store.cloneNode(true);
       clone.removeAttribute('id');
       body.appendChild(clone);
-      // Re-init if needed
+      // Re-init tools that need it
       if (app.builtinKey === 'unit') updateUnitOptions();
       if (app.builtinKey === 'age') {
         const _t = new Date();
         const asofEl = body.querySelector('#asofInput');
         if (asofEl) asofEl.value = pad(_t.getDate()) + '/' + pad(_t.getMonth()+1) + '/' + _t.getFullYear();
       }
+      if (app.builtinKey === 'worldclock') initWorldClock();
+      if (app.builtinKey === 'tempconv') updateTempConv(0, 'manual');
+      if (app.builtinKey === 'tip') calcTip();
     }
   } else {
     body.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text3)">App content not found.</div>`;
@@ -388,6 +492,8 @@ function closeModal(e) {
 }
 
 function _closeModal() {
+  // Stop world clock if running
+  if (_wcInterval) { clearInterval(_wcInterval); _wcInterval = null; }
   document.getElementById('modalOverlay').classList.remove('open');
   document.body.style.overflow = '';
   currentOpenAppId = null;
@@ -416,7 +522,8 @@ function openAdmin() {
   if (adminUnlocked) {
     showAdminDashboard();
   } else {
-    document.getElementById('adminLoginScreen').style.display = 'block';
+    document.getElementById('adminLoginScreen').style.display = 'flex';
+    document.getElementById('adminLoginScreen').style.flexDirection = 'column';
     document.getElementById('adminDashboard').style.display = 'none';
     setTimeout(() => document.getElementById('adminPassInput').focus(), 100);
   }
@@ -460,7 +567,6 @@ function switchAdminTab(tab) {
   document.getElementById('atcontent-' + tab).classList.add('active');
 }
 
-// Search & filter state
 let adminSearchQuery = '';
 let adminCatFilterVal = '';
 
@@ -520,26 +626,20 @@ function toggleAppVisibility(id) {
   const app = appRegistry.find(a => a.id === id);
   if (!app) return;
   app.visible = app.visible === false ? true : false;
-  saveRegistry();
-  renderAdminAppsList();
-  renderApps();
+  saveRegistry(); renderAdminAppsList(); renderApps();
 }
 
 function toggleAppAdminPin(id) {
   const app = appRegistry.find(a => a.id === id);
   if (!app) return;
   app.adminPinned = !app.adminPinned;
-  saveRegistry();
-  renderAdminAppsList();
-  renderApps();
+  saveRegistry(); renderAdminAppsList(); renderApps();
 }
 
 function deleteApp(id) {
   if (!confirm('Delete this app permanently?')) return;
   appRegistry = appRegistry.filter(a => a.id !== id);
-  saveRegistry();
-  renderAdminAppsList();
-  renderApps();
+  saveRegistry(); renderAdminAppsList(); renderApps();
 }
 
 function toggleAppTypeFields() {
@@ -569,7 +669,7 @@ function addNewApp() {
   const cat   = document.getElementById('newAppCategory').value;
   const type  = document.getElementById('newAppType').value;
   const url   = document.getElementById('newAppUrl').value.trim();
-  const color = document.getElementById('newAppColorHex').value.trim() || '#7c6af5';
+  const color = document.getElementById('newAppColorHex').value.trim() || '#00d2ff';
   const tagsRaw = document.getElementById('newAppTags').value.trim();
   const tags  = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
 
@@ -582,14 +682,11 @@ function addNewApp() {
   if (type === 'website') newApp.url = url;
 
   appRegistry.push(newApp);
-  saveRegistry();
-  renderApps();
-  renderAdminAppsList();
+  saveRegistry(); renderApps(); renderAdminAppsList();
 
-  // Clear form
-  ['newAppIcon','newAppName','newAppDesc','newAppUrl','newAppTags'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
-  document.getElementById('newAppColorHex').value = '#7c6af5';
-  document.getElementById('newAppColor').value = '#7c6af5';
+  ['newAppIcon','newAppName','newAppDesc','newAppUrl','newAppTags'].forEach(fid => { const el = document.getElementById(fid); if(el) el.value=''; });
+  document.getElementById('newAppColorHex').value = '#00d2ff';
+  document.getElementById('newAppColor').value = '#00d2ff';
 
   okEl.textContent = `✅ "${name}" added successfully!`;
   okEl.style.display = 'block';
@@ -714,7 +811,7 @@ function showToast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg;
   t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 1800);
+  setTimeout(() => t.classList.remove('show'), 2000);
 }
 
 // ─────────────────────────────────────────────
@@ -723,10 +820,7 @@ function showToast(msg) {
 let calcExpr = '';
 function getCalcEls() {
   const modal = document.getElementById('modalBody');
-  return {
-    expr: modal.querySelector('#calcExpr'),
-    val:  modal.querySelector('#calcVal')
-  };
+  return { expr: modal.querySelector('#calcExpr'), val: modal.querySelector('#calcVal') };
 }
 function calcInput(v) {
   calcExpr += v;
@@ -905,7 +999,7 @@ function generatePass() {
   let strength = 0;
   if (len>=12) strength++; if (len>=20) strength++;
   if (upper&&lower) strength++; if (num) strength++; if (sym) strength++;
-  const colors = ['#f56a6a','#f5a06a','#f5e26a','#6af5c0','#6af5c0'];
+  const colors = ['#ff4f7b','#f5a06a','#f5e26a','#22d3a5','#22d3a5'];
   const labels = ['Very Weak','Weak','Fair','Strong','Very Strong'];
   const bar = getModalEl('#strengthBar');
   const lbl = getModalEl('#strengthLabel');
@@ -1019,9 +1113,9 @@ function calcBMI() {
   bmi=+bmi.toFixed(1);
   let cat,color;
   if(bmi<18.5){cat='Underweight';color='#5bc8f5';}
-  else if(bmi<25){cat='Normal weight ✓';color='#6af5c0';}
+  else if(bmi<25){cat='Normal weight ✓';color='#22d3a5';}
   else if(bmi<30){cat='Overweight';color='#f5e26a';}
-  else{cat='Obese';color='#f56a6a';}
+  else{cat='Obese';color='#ff4f7b';}
   const pct = Math.min(Math.max((bmi-10)/35,0),1)*100;
   const res = getModalEl('#bmiResult'); if(res) res.style.display='block';
   const ptr = getModalEl('#bmiPointer'); if(ptr) ptr.style.left=pct+'%';
@@ -1114,7 +1208,6 @@ function textTransform(type) {
 // AGE CALCULATOR
 // ─────────────────────────────────────────────
 function pad(n) { return String(n).padStart(2,'0'); }
-
 function formatDateInput(el) {
   let v = el.value.replace(/\D/g,'');
   if (v.length > 2) v = v.slice(0,2) + '/' + v.slice(2);
@@ -1151,13 +1244,6 @@ function calcAge() {
 }
 
 // ─────────────────────────────────────────────
-// INIT
-// ─────────────────────────────────────────────
-applyTheme();
-renderApps();
-syncOnLoad(); // Silently add any DEFAULT_APPS missing from the saved registry
-
-// ─────────────────────────────────────────────
 // QR GENERATOR
 // ─────────────────────────────────────────────
 function generateQR() {
@@ -1165,8 +1251,6 @@ function generateQR() {
   if (!input) return;
   const qrImg = getModalEl('#qrImage');
   const qrRes = getModalEl('#qrResult');
-  
-  // Public API for QR Code
   const url = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(input)}&margin=10`;
   qrImg.src = url;
   qrRes.style.display = 'block';
@@ -1174,123 +1258,640 @@ function generateQR() {
 function downloadQR() {
   const qrImg = getModalEl('#qrImage');
   if (!qrImg || !qrImg.src) return;
-  
-  // Trigger download cross-origin gracefully
   fetch(qrImg.src).then(res => res.blob()).then(blob => {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'UtilityX_QRCode.png';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }).catch(e => {
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  }).catch(() => {
     const a = document.createElement('a');
-    a.href = qrImg.src;
-    a.download = 'UtilityX_QRCode.png';
-    a.target = '_blank';
-    a.click();
+    a.href = qrImg.src; a.download = 'UtilityX_QRCode.png'; a.target = '_blank'; a.click();
   });
 }
 
 // ─────────────────────────────────────────────
 // POMODORO TIMER
 // ─────────────────────────────────────────────
-let pomoInterval;
-let pomoSeconds = 25 * 60;
-let pomoRunning = false;
-let pomoMode = 'work'; // 'work' or 'break'
-
+let pomoInterval, pomoSeconds = 25*60, pomoRunning = false, pomoMode = 'work';
 function updatePomoDisplay() {
-  const m = Math.floor(pomoSeconds / 60).toString().padStart(2, '0');
-  const s = (pomoSeconds % 60).toString().padStart(2, '0');
-  const timeEl = getModalEl('#pomoTime');
-  if (timeEl) timeEl.textContent = `${m}:${s}`;
+  const m = Math.floor(pomoSeconds/60).toString().padStart(2,'0');
+  const s = (pomoSeconds%60).toString().padStart(2,'0');
+  const el = getModalEl('#pomoTime'); if(el) el.textContent=`${m}:${s}`;
 }
 function setPomoMode(mode) {
-  pomoMode = mode;
-  pomoRunning = false;
-  clearInterval(pomoInterval);
-  const btn = getModalEl('#pomoStartBtn');
-  if (btn) btn.textContent = '▶ Start';
-  
-  const wBtn = getModalEl('#pomoWork');
-  const bBtn = getModalEl('#pomoBreak');
-  
-  if (mode === 'work') {
-    pomoSeconds = 25 * 60;
-    if (wBtn) wBtn.classList.add('active');
-    if (bBtn) bBtn.classList.remove('active');
-    const timeEl = getModalEl('#pomoTime');
-    if (timeEl) timeEl.style.color = 'var(--accent2)';
+  pomoMode = mode; pomoRunning = false; clearInterval(pomoInterval);
+  const btn = getModalEl('#pomoStartBtn'); if(btn) btn.textContent='▶ Start';
+  const wBtn = getModalEl('#pomoWork'), bBtn = getModalEl('#pomoBreak');
+  if (mode==='work') {
+    pomoSeconds=25*60;
+    if(wBtn) wBtn.classList.add('active'); if(bBtn) bBtn.classList.remove('active');
+    const el=getModalEl('#pomoTime'); if(el) el.style.color='var(--accent2)';
   } else {
-    pomoSeconds = 5 * 60;
-    if (wBtn) wBtn.classList.remove('active');
-    if (bBtn) bBtn.classList.add('active');
-    const timeEl = getModalEl('#pomoTime');
-    if (timeEl) timeEl.style.color = 'var(--accent3)'; 
+    pomoSeconds=5*60;
+    if(wBtn) wBtn.classList.remove('active'); if(bBtn) bBtn.classList.add('active');
+    const el=getModalEl('#pomoTime'); if(el) el.style.color='var(--accent3)';
   }
   updatePomoDisplay();
 }
 function pomoStart() {
   const btn = getModalEl('#pomoStartBtn');
   if (!pomoRunning) {
-    if (pomoSeconds <= 0) setPomoMode(pomoMode);
-    pomoRunning = true;
-    if (btn) btn.textContent = '⏸ Pause';
-    pomoInterval = setInterval(() => {
+    if (pomoSeconds<=0) setPomoMode(pomoMode);
+    pomoRunning=true; if(btn) btn.textContent='⏸ Pause';
+    pomoInterval = setInterval(()=>{
       pomoSeconds--;
       updatePomoDisplay();
-      if (pomoSeconds <= 0) {
-        clearInterval(pomoInterval);
-        pomoRunning = false;
-        if (btn) btn.textContent = '▶ Restart';
-        showToast(pomoMode === 'work' ? 'Time for a break!' : 'Back to work!');
+      if(pomoSeconds<=0){
+        clearInterval(pomoInterval); pomoRunning=false;
+        if(btn) btn.textContent='▶ Restart';
+        showToast(pomoMode==='work'?'Time for a break! 🎉':'Back to work! 💪');
       }
-    }, 1000);
+    },1000);
   } else {
-    pomoRunning = false;
-    clearInterval(pomoInterval);
-    if (btn) btn.textContent = '▶ Resume';
+    pomoRunning=false; clearInterval(pomoInterval);
+    if(btn) btn.textContent='▶ Resume';
   }
 }
-function pomoReset() {
-  setPomoMode(pomoMode);
-}
+function pomoReset() { setPomoMode(pomoMode); }
 
 // ─────────────────────────────────────────────
 // JSON FORMATTER
 // ─────────────────────────────────────────────
 function formatJSON() {
   const input = getModalEl('#jsonInput').value;
-  const err = getModalEl('#jsonError');
-  const res = getModalEl('#jsonResultBox');
-  const out = getModalEl('#jsonOutput');
+  const err=getModalEl('#jsonError'), res=getModalEl('#jsonResultBox'), out=getModalEl('#jsonOutput');
   if (!input.trim()) return;
   try {
-    const parsed = JSON.parse(input);
-    const formatted = JSON.stringify(parsed, null, 2);
-    if (out) out.textContent = formatted;
-    if (err) err.style.display = 'none';
-    if (res) res.style.display = 'block';
-  } catch(e) {
-    if (err) err.style.display = 'block';
-    if (res) res.style.display = 'none';
-  }
+    const formatted = JSON.stringify(JSON.parse(input), null, 2);
+    if(out) out.textContent=formatted; if(err) err.style.display='none'; if(res) res.style.display='block';
+  } catch(e) { if(err) err.style.display='block'; if(res) res.style.display='none'; }
 }
 function minifyJSON() {
   const input = getModalEl('#jsonInput').value;
-  const err = getModalEl('#jsonError');
-  const res = getModalEl('#jsonResultBox');
-  const out = getModalEl('#jsonOutput');
+  const err=getModalEl('#jsonError'), res=getModalEl('#jsonResultBox'), out=getModalEl('#jsonOutput');
   if (!input.trim()) return;
   try {
-    const parsed = JSON.parse(input);
-    const minified = JSON.stringify(parsed);
-    if (out) out.textContent = minified;
-    if (err) err.style.display = 'none';
-    if (res) res.style.display = 'block';
-  } catch(e) {
-    if (err) err.style.display = 'block';
-    if (res) res.style.display = 'none';
+    const minified = JSON.stringify(JSON.parse(input));
+    if(out) out.textContent=minified; if(err) err.style.display='none'; if(res) res.style.display='block';
+  } catch(e) { if(err) err.style.display='block'; if(res) res.style.display='none'; }
+}
+
+// ─────────────────────────────────────────────
+// NEW TOOL #1 — LOREM IPSUM GENERATOR
+// ─────────────────────────────────────────────
+const LOREM_WORDS = 'lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud exercitation ullamco laboris nisi aliquip ex ea commodo consequat duis aute irure dolor reprehenderit voluptate velit esse cillum fugiat nulla pariatur excepteur sint occaecat cupidatat non proident culpa qui officia deserunt mollit anim id est laborum pellentesque habitant morbi tristique senectus netus malesuada fames turpis egestas pretium aenean pharetra magna'.split(' ');
+
+function _loremWords(n) {
+  const out = [];
+  for (let i=0; i<n; i++) out.push(LOREM_WORDS[Math.floor(Math.random()*LOREM_WORDS.length)]);
+  out[0] = out[0][0].toUpperCase() + out[0].slice(1);
+  return out.join(' ') + '.';
+}
+function _loremSentence() {
+  return _loremWords(Math.floor(Math.random()*12)+6);
+}
+function _loremParagraph() {
+  const sentences = Math.floor(Math.random()*4)+3;
+  return Array.from({length:sentences}, ()=>_loremSentence()).join(' ');
+}
+
+function generateLorem() {
+  const type = getModalEl('#loremType').value;
+  const amount = Math.min(parseInt(getModalEl('#loremAmount').value)||3, 20);
+  const out = getModalEl('#loremOutput');
+  if (!out) return;
+  let html = '';
+  if (type==='paragraphs') {
+    html = Array.from({length:amount}, ()=>`<p>${_loremParagraph()}</p>`).join('');
+  } else if (type==='sentences') {
+    html = `<p>${Array.from({length:amount}, ()=>_loremSentence()).join(' ')}</p>`;
+  } else {
+    html = `<p>${_loremWords(amount)}</p>`;
   }
+  out.innerHTML = html;
+  out.style.display = 'block';
+}
+
+function copyLoremOutput() {
+  const out = getModalEl('#loremOutput');
+  if (!out) return;
+  navigator.clipboard.writeText(out.innerText || out.textContent || '').catch(()=>{});
+  showToast('Lorem text copied!');
+}
+
+// ─────────────────────────────────────────────
+// NEW TOOL #2 — TEMPERATURE CONVERTER
+// ─────────────────────────────────────────────
+function updateTempConv(celsiusVal, source) {
+  const c = parseFloat(celsiusVal);
+  if (isNaN(c)) return;
+
+  const f = c * 9/5 + 32;
+  const k = c + 273.15;
+
+  const setVal = (id, v) => {
+    const el = getModalEl(id); if(el) el.textContent = v.toFixed(2);
+  };
+  setVal('#tc-c-val', c);
+  setVal('#tc-f-val', f);
+  setVal('#tc-k-val', k);
+
+  // Update slider (only if not driven by slider itself)
+  if (source !== 'slider') {
+    const slider = getModalEl('#tempSlider');
+    if (slider) slider.value = Math.max(-100, Math.min(200, c));
+  }
+
+  // Highlight active card
+  ['#tc-c','#tc-f','#tc-k'].forEach(id => {
+    const el = getModalEl(id); if(el) el.classList.remove('active');
+  });
+  const activeId = source==='slider' ? '#tc-c' : '#tc-c';
+  const active = getModalEl(activeId); if(active) active.classList.add('active');
+}
+
+// ─────────────────────────────────────────────
+// NEW TOOL #3 — URL ENCODER / DECODER
+// ─────────────────────────────────────────────
+let urlEncMode = 'encode';
+
+function setUrlEncMode(mode) {
+  urlEncMode = mode;
+  const encBtn = getModalEl('#urlenc-mode-enc');
+  const decBtn = getModalEl('#urlenc-mode-dec');
+  const label  = getModalEl('#urlEncInputLabel');
+  const resLabel = getModalEl('#urlEncResultLabel');
+  if (encBtn) encBtn.classList.toggle('active', mode==='encode');
+  if (decBtn) decBtn.classList.toggle('active', mode==='decode');
+  if (label) label.textContent = mode==='encode' ? 'Input URL or text to encode' : 'Input encoded URL to decode';
+  if (resLabel) resLabel.textContent = mode==='encode' ? 'Encoded Output' : 'Decoded Output';
+  runUrlEnc();
+}
+
+function runUrlEnc() {
+  const input = getModalEl('#urlEncInput');
+  const result = getModalEl('#urlEncResult');
+  const output = getModalEl('#urlEncOutput');
+  const errEl  = getModalEl('#urlEncError');
+  if (!input) return;
+  const val = input.value;
+  if (!val.trim()) { if(result) result.style.display='none'; return; }
+  try {
+    let out;
+    if (urlEncMode === 'encode') {
+      out = encodeURIComponent(val);
+    } else {
+      out = decodeURIComponent(val.replace(/\+/g,' '));
+    }
+    if (output) output.textContent = out;
+    if (result) result.style.display = 'block';
+    if (errEl)  errEl.style.display  = 'none';
+  } catch(e) {
+    if (result) result.style.display='none';
+    if (errEl)  { errEl.style.display='block'; errEl.textContent='❌ Invalid encoded string.'; }
+  }
+}
+
+function copyUrlEncOutput() {
+  const output = getModalEl('#urlEncOutput');
+  if (!output) return;
+  navigator.clipboard.writeText(output.textContent || '').catch(()=>{});
+  showToast('Copied!');
+}
+
+// ─────────────────────────────────────────────
+// NEW TOOL #4 — WORLD CLOCK
+// ─────────────────────────────────────────────
+const WC_CITIES = [
+  { name:'New York',   zone:'America/New_York',      flag:'🇺🇸' },
+  { name:'London',     zone:'Europe/London',          flag:'🇬🇧' },
+  { name:'Paris',      zone:'Europe/Paris',           flag:'🇫🇷' },
+  { name:'Dubai',      zone:'Asia/Dubai',             flag:'🇦🇪' },
+  { name:'Mumbai',     zone:'Asia/Kolkata',           flag:'🇮🇳' },
+  { name:'Singapore',  zone:'Asia/Singapore',         flag:'🇸🇬' },
+  { name:'Tokyo',      zone:'Asia/Tokyo',             flag:'🇯🇵' },
+  { name:'Sydney',     zone:'Australia/Sydney',       flag:'🇦🇺' },
+];
+
+let _wcInterval = null;
+
+function _wcHandCoords(cx, cy, r, angleDeg) {
+  const rad = (angleDeg - 90) * Math.PI / 180;
+  return { x: cx + r * Math.cos(rad), y: cy + r * Math.sin(rad) };
+}
+
+function _wcClockSVG(cityId) {
+  const cx=23, cy=23, R=20;
+  return `
+    <svg class="wc-ring" viewBox="0 0 46 46" id="wc-svg-${cityId}">
+      <circle cx="${cx}" cy="${cy}" r="${R}"/>
+      <line class="wc-h" id="wc-h-${cityId}" x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-R*0.55}"/>
+      <line class="wc-m" id="wc-m-${cityId}" x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-R*0.75}"/>
+      <line class="wc-s" id="wc-s-${cityId}" x1="${cx}" y1="${cy}" x2="${cx}" y2="${cy-R*0.88}"/>
+      <circle cx="${cx}" cy="${cy}" r="2" fill="var(--accent)"/>
+    </svg>`;
+}
+
+function initWorldClock() {
+  const grid = getModalEl('#worldClockGrid');
+  if (!grid) return;
+
+  grid.innerHTML = WC_CITIES.map((city, i) => `
+    <div class="wc-card">
+      ${_wcClockSVG(i)}
+      <div class="wc-info">
+        <div class="wc-city">${city.flag} ${city.name}</div>
+        <div class="wc-zone">${city.zone.replace('_',' ')}</div>
+        <div class="wc-time" id="wc-time-${i}">--:--:--</div>
+        <div class="wc-date" id="wc-date-${i}">--</div>
+      </div>
+    </div>`).join('');
+
+  _wcTick();
+  if (_wcInterval) clearInterval(_wcInterval);
+  _wcInterval = setInterval(_wcTick, 1000);
+}
+
+function _wcTick() {
+  const now = new Date();
+  WC_CITIES.forEach((city, i) => {
+    const opts = { timeZone: city.zone, hour:'2-digit', minute:'2-digit', second:'2-digit', hour12: false };
+    const dateOpts = { timeZone: city.zone, weekday:'short', month:'short', day:'numeric' };
+    const timeStr = now.toLocaleTimeString('en-GB', opts);
+    const dateStr = now.toLocaleDateString('en-GB', dateOpts);
+
+    const tEl = document.getElementById('wc-time-'+i); if(tEl) tEl.textContent = timeStr;
+    const dEl = document.getElementById('wc-date-'+i); if(dEl) dEl.textContent = dateStr;
+
+    // Analog hands
+    const parts = timeStr.split(':').map(Number);
+    const h=parts[0]%12, m=parts[1], s=parts[2];
+    const hDeg = h*30 + m*0.5;
+    const mDeg = m*6 + s*0.1;
+    const sDeg = s*6;
+
+    const cx=23, cy=23;
+    const setHand = (id, deg, r) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const end = _wcHandCoords(cx, cy, r, deg);
+      el.setAttribute('x2', end.x.toFixed(2));
+      el.setAttribute('y2', end.y.toFixed(2));
+    };
+    setHand(`wc-h-${i}`, hDeg, 20*0.55);
+    setHand(`wc-m-${i}`, mDeg, 20*0.75);
+    setHand(`wc-s-${i}`, sDeg, 20*0.88);
+  });
+}
+
+// ─────────────────────────────────────────────
+// NEW TOOL #5 — TIP CALCULATOR
+// ─────────────────────────────────────────────
+function calcTip() {
+  const bill    = parseFloat(getModalEl('#tipBill')?.value) || 0;
+  const pct     = parseFloat(getModalEl('#tipPct')?.value) || 0;
+  const people  = Math.max(1, parseInt(getModalEl('#tipPeople')?.value) || 1);
+
+  const tip       = bill * pct / 100;
+  const total     = bill + tip;
+  const perPerson = total / people;
+
+  const fmt = v => '$' + v.toFixed(2);
+  const setEl = (id, v) => { const el=getModalEl('#'+id); if(el) el.textContent=v; };
+  setEl('tipAmount', fmt(tip));
+  setEl('tipTotal',  fmt(total));
+  setEl('tipPerPerson', fmt(perPerson));
+}
+
+// ─────────────────────────────────────────────
+// NEW TOOL #6 — IMAGE → BASE64
+// ─────────────────────────────────────────────
+function imgDragOver(e) {
+  e.preventDefault();
+  const zone = getModalEl('#imgDropZone'); if(zone) zone.classList.add('drag-over');
+}
+function imgDragLeave(e) {
+  const zone = getModalEl('#imgDropZone'); if(zone) zone.classList.remove('drag-over');
+}
+function imgDrop(e) {
+  e.preventDefault();
+  const zone = getModalEl('#imgDropZone'); if(zone) zone.classList.remove('drag-over');
+  const file = e.dataTransfer?.files?.[0];
+  if (file && file.type.startsWith('image/')) processImgFile(file);
+}
+function imgFileSelected(e) {
+  const file = e.target.files?.[0];
+  if (file) processImgFile(file);
+}
+function processImgFile(file) {
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    const dataUrl = ev.target.result;
+    const preview = getModalEl('#imgPreview');
+    const output  = getModalEl('#imgB64Output');
+    const info    = getModalEl('#imgB64Info');
+    const actions = getModalEl('#imgB64Actions');
+    const zone    = getModalEl('#imgDropZone');
+
+    if (preview) { preview.src = dataUrl; preview.style.display = 'block'; }
+    if (output)  { output.textContent = dataUrl; output.style.display = 'block'; }
+    if (zone)    zone.style.display = 'none';
+    if (info) {
+      info.textContent = `${file.name} · ${(file.size/1024).toFixed(1)} KB · ${file.type}`;
+      info.style.display = 'block';
+    }
+    if (actions) actions.style.display = 'flex';
+  };
+  reader.readAsDataURL(file);
+}
+function copyImgBase64() {
+  const output = getModalEl('#imgB64Output');
+  if (!output) return;
+  navigator.clipboard.writeText(output.textContent || '').catch(()=>{});
+  showToast('Base64 copied!');
+}
+function clearImgBase64() {
+  const preview = getModalEl('#imgPreview');
+  const output  = getModalEl('#imgB64Output');
+  const info    = getModalEl('#imgB64Info');
+  const actions = getModalEl('#imgB64Actions');
+  const zone    = getModalEl('#imgDropZone');
+  const fileInput = getModalEl('#imgFileInput');
+  if (preview) { preview.src=''; preview.style.display='none'; }
+  if (output)  { output.textContent=''; output.style.display='none'; }
+  if (info)    info.style.display='none';
+  if (actions) actions.style.display='none';
+  if (zone)    zone.style.display='block';
+  if (fileInput) fileInput.value='';
+}
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+
+renderApps();
+syncOnLoad();
+
+// ─────────────────────────────────────────────
+// K-MAP SOLVER
+// ─────────────────────────────────────────────
+let kmapData = [];
+let kmapNumVars = 4;
+
+function renderKMapGrid() {
+  kmapNumVars = parseInt(document.getElementById('kmapVars').value);
+  const container = document.getElementById('kmapGridContainer');
+  if (!container) return;
+  
+  let rows, cols;
+  let rowLabels, colLabels;
+  
+  if (kmapNumVars === 2) {
+    rows = 2; cols = 2;
+    rowLabels = ['0','1']; colLabels = ['0','1'];
+  } else if (kmapNumVars === 3) {
+    rows = 2; cols = 4;
+    rowLabels = ['0','1']; colLabels = ['00','01','11','10'];
+  } else if (kmapNumVars === 4) {
+    rows = 4; cols = 4;
+    rowLabels = ['00','01','11','10']; colLabels = ['00','01','11','10'];
+  } else if (kmapNumVars === 5) {
+    rows = 4; cols = 8;
+    rowLabels = ['00','01','11','10']; colLabels = ['000','001','011','010','110','111','101','100'];
+  }
+
+  // Initialize data array to '0'
+  kmapData = Array(rows).fill(0).map(() => Array(cols).fill('0'));
+
+  let html = '<table style="border-collapse: collapse; margin: 0 auto; border: 4px solid var(--border); background: var(--card); text-align: center;">';
+  
+  // Header row
+  html += '<tr><th style="border: 3px solid var(--border); padding: 8px; background: var(--bg3);"></th>';
+  for(let c=0; c<cols; c++) {
+    html += '<th style="border: 3px solid var(--border); padding: 8px; font-family: \'DM Mono\', monospace;">' + colLabels[c] + '</th>';
+  }
+  html += '</tr>';
+
+  for(let r=0; r<rows; r++) {
+    html += '<tr>';
+    html += '<th style="border: 3px solid var(--border); padding: 8px; font-family: \'DM Mono\', monospace; background: var(--bg3);">' + rowLabels[r] + '</th>';
+    for(let c=0; c<cols; c++) {
+      html += '<td style="border: 3px solid var(--border); padding: 0;">';
+      html += `<button class="kmap-cell-btn" data-r="${r}" data-c="${c}" onclick="toggleKMapCell(this, ${r}, ${c})" style="width:100%; height:100%; min-width:40px; min-height:40px; background:transparent; border:none; font-family:\'DM Mono\', monospace; font-size:1.1rem; font-weight:bold; cursor:pointer;">0</button>`;
+      html += '</td>';
+    }
+    html += '</tr>';
+  }
+  html += '</table>';
+  container.innerHTML = html;
+  
+  document.getElementById('kmapResultBox').style.display = 'none';
+}
+
+function toggleKMapCell(btn, r, c) {
+  let states = ['0', '1', 'X'];
+  let cur = kmapData[r][c];
+  let next = states[(states.indexOf(cur) + 1) % 3];
+  kmapData[r][c] = next;
+  btn.textContent = next;
+  btn.style.color = next === '1' ? 'var(--accent)' : next === 'X' ? 'var(--accent2)' : 'var(--text)';
+}
+
+function solveKMap() {
+  const container = document.getElementById('kmapGridContainer');
+  if (!container.innerHTML) renderKMapGrid();
+
+  let minterms = [];
+  let dontcares = [];
+  
+  // Need to map grid coordinates back to binary values.
+  // Using Gray code sequence index to normal index
+  let gray2 = [0, 1, 3, 2];
+  let gray3 = [0, 1, 3, 2, 6, 7, 5, 4];
+  
+  let rows = kmapData.length;
+  let cols = kmapData[0].length;
+  
+  for(let r=0; r<rows; r++) {
+    for(let c=0; c<cols; c++) {
+      let val = kmapData[r][c];
+      if (val === '0') continue;
+      
+      let index = 0;
+      if (kmapNumVars === 2) {
+        index = (gray2[r%2] << 1) | gray2[c%2];
+      } else if (kmapNumVars === 3) {
+        index = (gray2[r%2] << 2) | gray2[c%4];
+      } else if (kmapNumVars === 4) {
+        index = (gray2[r%4] << 2) | gray2[c%4];
+      } else if (kmapNumVars === 5) {
+        index = (gray2[r%4] << 3) | gray3[c%8];
+      }
+      
+      if (val === '1') minterms.push(index);
+      if (val === 'X') dontcares.push(index);
+    }
+  }
+
+  const resultStr = getQuineMcCluskey(minterms, dontcares, kmapNumVars);
+  const out = document.getElementById('kmapOutput');
+  const box = document.getElementById('kmapResultBox');
+  out.textContent = resultStr || "0 (False)";
+  box.style.display = 'block';
+}
+
+function getQuineMcCluskey(minterms, dontcares, numVars) {
+  if (minterms.length === 0) return "0";
+  let allMinterms = minterms.concat(dontcares);
+  if (allMinterms.length === (1 << numVars)) return "1";
+
+  function countBits(n) {
+    let count = 0;
+    while(n) { count += n & 1; n >>= 1; }
+    return count;
+  }
+  
+  function toBinaryArr(n, bits) {
+    let arr = [];
+    for(let i=bits-1; i>=0; i--) arr.push((n >> i) & 1);
+    return arr;
+  }
+
+  let groups = Array.from({length: numVars + 1}, () => []);
+  for (let m of allMinterms) {
+    let term = toBinaryArr(m, numVars);
+    groups[countBits(m)].push({ term: term, covered: false, m: [m] });
+  }
+
+  let primeImplicants = [];
+  
+  function diffTerms(t1, t2) {
+    let diffs = 0;
+    let idx = -1;
+    for(let i=0; i<t1.length; i++) {
+      if (t1[i] !== t2[i]) { diffs++; idx = i; }
+    }
+    return diffs === 1 ? idx : -1;
+  }
+
+  let done = false;
+  while (!done) {
+    let nextGroups = Array.from({length: numVars + 1}, () => []);
+    done = true;
+    let added = new Set();
+    
+    for (let i = 0; i < groups.length - 1; i++) {
+      for (let t1 of groups[i]) {
+        for (let t2 of groups[i+1]) {
+          let diffIdx = diffTerms(t1.term, t2.term);
+          if (diffIdx !== -1) {
+            done = false;
+            t1.covered = true;
+            t2.covered = true;
+            let nTerm = [...t1.term];
+            nTerm[diffIdx] = '-';
+            let strTerm = nTerm.join('');
+            if (!added.has(strTerm)) {
+              added.add(strTerm);
+              let nm = [...new Set([...t1.m, ...t2.m])];
+              nextGroups[i].push({ term: nTerm, covered: false, m: nm });
+            }
+          }
+        }
+      }
+    }
+    for (let i = 0; i < groups.length; i++) {
+      for (let t of groups[i]) {
+        if (!t.covered) primeImplicants.push(t);
+      }
+    }
+    groups = nextGroups;
+  }
+
+  let chart = {};
+  for (let m of minterms) chart[m] = [];
+  for (let i = 0; i < primeImplicants.length; i++) {
+    for (let m of primeImplicants[i].m) {
+      if (m in chart) chart[m].push(i);
+    }
+  }
+
+  let essential = [];
+  let remainingMinterms = new Set(minterms);
+  
+  for (let m in chart) {
+    if (chart[m].length === 1 && remainingMinterms.has(parseInt(m))) {
+      let pIdx = chart[m][0];
+      if (!essential.includes(pIdx)) {
+        essential.push(pIdx);
+        for (let coveredM of primeImplicants[pIdx].m) {
+          remainingMinterms.delete(coveredM);
+        }
+      }
+    }
+  }
+
+  // Very simplified greedy approach for remaining (Petrick's exact is too much for JS simple tool)
+  while (remainingMinterms.size > 0) {
+    let bestPIdx = -1;
+    let maxCover = 0;
+    for (let i = 0; i < primeImplicants.length; i++) {
+      if (essential.includes(i)) continue;
+      let cov = 0;
+      for (let m of primeImplicants[i].m) {
+        if (remainingMinterms.has(m)) cov++;
+      }
+      if (cov > maxCover) {
+        maxCover = cov;
+        bestPIdx = i;
+      }
+    }
+    if (bestPIdx !== -1) {
+      essential.push(bestPIdx);
+      for (let m of primeImplicants[bestPIdx].m) {
+        remainingMinterms.delete(m);
+      }
+    } else {
+      break;
+    }
+  }
+
+  let vars = ['A', 'B', 'C', 'D', 'E'];
+  let sop = [];
+  for (let idx of essential) {
+    let t = primeImplicants[idx].term;
+    let s = "";
+    for (let i = 0; i < t.length; i++) {
+      if (t[i] === 1) s += vars[i];
+      else if (t[i] === 0) s += vars[i] + "'";
+    }
+    if (s === "") s = "1";
+    sop.push(s);
+  }
+  
+  return sop.join(" + ");
+}
+
+// Intercept modal open for KMAP to render the grid
+const originalOpenApp = window.openApp;
+if (originalOpenApp && typeof openApp === 'function') {
+  window.openApp = function(id) {
+    originalOpenApp(id);
+    if (id === 'kmap' || (typeof appRegistry !== 'undefined' && appRegistry.find(a => a.id === id)?.builtinKey === 'kmap')) {
+       setTimeout(renderKMapGrid, 50);
+    }
+  }
+} else {
+  // wait for it
+  setTimeout(() => {
+      if (typeof openApp === 'function' && openApp.toString().indexOf('renderKMapGrid') === -1) {
+          const old = window.openApp;
+          window.openApp = function(id) {
+              old(id);
+              if (id === 'kmap' || (appRegistry.find(a => a.id === id)?.builtinKey === 'kmap')) {
+                  setTimeout(renderKMapGrid, 50);
+              }
+          }
+      }
+  }, 1000);
 }

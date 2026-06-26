@@ -7,27 +7,27 @@
 
 /* ── CSS VARIABLES ── */
 :root {
-  --bg:           #E8E8E4;
-  --bg2:          #FFE400;
-  --bg3:          #F4F4F0;
-  --card:         #FFFFFF;
-  --card-hover:   #FFFFFF;
-  --border:       #000000;
-  --accent:       #FF3366;
-  --accent2:      #00C3FF;
-  --accent3:      #CCFF00;
-  --text:         #000000;
-  --text2:        #222222;
-  --text3:        #444444;
-  --input-bg:     #FFFFFF;
-  --shadow:       4px 4px 0 #000000;
-  --shadow-card:  8px 8px 0 #000000;
-  --history-bg:   #E8E8E4;
-  --btn-text:     #FFFFFF;
-  --modal-bg:     #FFFFFF;
-  --overlay-bg:   rgba(0,0,0,0.8);
-  --glass-bg:     #FFFFFF;
-  --glass-border: #000000;
+  --bg:           #0a0a0a;
+  --bg2:          #141414;
+  --bg3:          #1f1f1f;
+  --card:         #111111;
+  --card-hover:   #1a1a1a;
+  --border:       #333333;
+  --accent:       #00FFFF;
+  --accent2:      #FF00FF;
+  --accent3:      #00FF41;
+  --text:         #FFFFFF;
+  --text2:        #CCCCCC;
+  --text3:        #888888;
+  --input-bg:     #000000;
+  --shadow:       4px 4px 0 var(--accent);
+  --shadow-card:  8px 8px 0 var(--accent2);
+  --history-bg:   #0a0a0a;
+  --btn-text:     #000000;
+  --modal-bg:     #111111;
+  --overlay-bg:   rgba(0,0,0,0.85);
+  --glass-bg:     #111111;
+  --glass-border: #333333;
   --glow:         none;
   --glow-hover:   none;
 }
@@ -882,3 +882,90 @@ input[type="range"].temp-slider::-webkit-slider-thumb {
   .tip-summary { grid-template-columns: 1fr; }
   .age-result-grid { grid-template-columns: repeat(3, 1fr); }
 }
+
+
+/* ── ENHANCED ADMIN & WIDGETS ── */
+.admin-stats-bar {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 3px solid var(--border); flex-shrink: 0;
+}
+.admin-stat-item {
+  padding: 14px 8px; text-align: center; display: flex;
+  flex-direction: column; gap: 3px;
+  border-right: 3px solid var(--border); background: var(--bg3);
+}
+.admin-stat-item:last-child { border-right: none; }
+.admin-stat-val {
+  font-family: 'DM Mono', monospace; font-size: 1.5rem;
+  font-weight: 800; color: var(--accent); line-height: 1;
+}
+.admin-stat-val.green { color: var(--accent3); }
+.admin-stat-val.red   { color: var(--accent2); }
+.admin-stat-val.amber { color: #f5a06a; }
+.admin-stat-lbl { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text3); font-weight: 700; }
+
+.admin-search-row { display: flex; gap: 8px; margin-bottom: 10px; align-items: center; }
+.admin-search-row .admin-input { flex: 1; }
+
+.admin-bulk-row { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.btn-ghost-sm {
+  padding: 6px 12px; background: var(--input-bg);
+  border: 3px solid var(--border); color: var(--text2);
+  font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: bold;
+  cursor: pointer; transition: all 0.1s; white-space: nowrap; box-shadow: 2px 2px 0 var(--accent3);
+}
+.btn-ghost-sm:hover { transform: translate(-1px, -1px); box-shadow: 3px 3px 0 var(--accent3); }
+.btn-ghost-sm:active { transform: translate(2px, 2px); box-shadow: 0px 0px 0 var(--accent3); }
+
+.admin-app-item.admin-app-hidden { opacity: 0.42; filter: grayscale(1); }
+.admin-app-meta { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+.admin-cat-badge, .admin-type-badge, .admin-custom-badge {
+  font-size: 0.6rem; padding: 2px 7px; border: 2px solid var(--border);
+  color: var(--text2); background: var(--bg2); font-family: 'DM Mono', monospace; font-weight: bold;
+}
+.admin-custom-badge { color: var(--text); border-color: var(--accent2); background: var(--accent2); }
+.admin-type-badge.ext { color: var(--btn-text); border-color: var(--accent); background: var(--accent); }
+
+.admin-icon-btn {
+  width: 36px; height: 36px; border: 3px solid var(--border);
+  background: var(--input-bg); cursor: pointer; display: flex; align-items: center;
+  justify-content: center; font-size: 1rem; transition: all 0.1s; flex-shrink: 0; box-shadow: 2px 2px 0 var(--border);
+}
+.admin-icon-btn:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 var(--border); }
+.admin-icon-btn:active { transform: translate(2px,2px); box-shadow: 0 0 0 var(--border); }
+.admin-icon-btn.vis    { box-shadow: 2px 2px 0 var(--accent3); border-color: var(--accent3); }
+.admin-icon-btn.hid    { box-shadow: 2px 2px 0 var(--accent2); border-color: var(--accent2); }
+.admin-icon-btn.pinned { box-shadow: 2px 2px 0 #FF9900; border-color: #FF9900; background: #FF9900; color: #000; }
+.admin-icon-btn.del:hover { background: var(--accent2); }
+
+.admin-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 8px; }
+.admin-action-btn {
+  padding: 12px; border: 3px solid var(--border);
+  background: var(--input-bg); color: var(--text); font-family: 'DM Mono', monospace;
+  font-size: 0.8rem; font-weight: bold; cursor: pointer; transition: all 0.1s; text-align: center; box-shadow: 4px 4px 0 var(--accent);
+}
+.admin-action-btn:hover { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--accent); }
+.admin-action-btn:active { transform: translate(4px,4px); box-shadow: 0 0 0 var(--accent); }
+.admin-action-btn.danger { box-shadow: 4px 4px 0 var(--accent2); }
+.admin-action-btn.danger:hover { box-shadow: 6px 6px 0 var(--accent2); }
+
+/* WIDGETS */
+.cyber-marquee {
+  width: 100%; background: var(--accent3); color: #000;
+  font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 800;
+  padding: 6px 0; border-bottom: 3px solid var(--border);
+  text-transform: uppercase; letter-spacing: 2px; overflow: hidden; white-space: nowrap;
+}
+.cyber-marquee span {
+  display: inline-block; padding-left: 100%; animation: marquee 20s linear infinite;
+}
+@keyframes marquee { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+
+.widget-card {
+  background: var(--input-bg); border: 3px solid var(--border); padding: 16px;
+  box-shadow: var(--shadow-card); display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.widget-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; color: var(--text3); text-transform: uppercase; font-weight: 800; letter-spacing: 2px; margin-bottom: 8px; }
+.widget-value { font-family: 'DM Mono', monospace; font-size: 1.8rem; color: var(--accent); font-weight: 800; }
+.cpu-bar-container { width: 100%; height: 12px; border: 2px solid var(--border); background: #000; margin-top: 8px; position: relative; }
+.cpu-bar-fill { height: 100%; background: var(--accent2); width: 0%; transition: width 0.3s cubic-bezier(0,1,0.5,1); }

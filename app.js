@@ -1895,3 +1895,44 @@ if (originalOpenApp && typeof openApp === 'function') {
       }
   }, 1000);
 }
+
+
+// ─────────────────────────────────────────────
+// COOL WIDGETS LOGIC
+// ─────────────────────────────────────────────
+function initWidgets() {
+  const clockEl = document.getElementById('sysClock');
+  const cpuVal = document.getElementById('cpuVal');
+  const cpuBar = document.getElementById('cpuBar');
+  const netVal = document.getElementById('netVal');
+  
+  if (clockEl) {
+    setInterval(() => {
+      const d = new Date();
+      clockEl.textContent = d.toLocaleTimeString('en-US', {hour12: false});
+    }, 1000);
+  }
+
+  if (cpuVal && cpuBar) {
+    setInterval(() => {
+      // Fluctuate CPU between 5% and 95%
+      let load = Math.floor(Math.random() * 90) + 5;
+      if (Math.random() > 0.8) load = Math.floor(Math.random() * 20) + 80; // spike
+      cpuVal.textContent = load + '%';
+      cpuBar.style.width = load + '%';
+      if (load > 85) {
+        cpuBar.style.background = 'var(--accent)';
+      } else {
+        cpuBar.style.background = 'var(--accent2)';
+      }
+    }, 1500);
+  }
+
+  if (netVal) {
+    setInterval(() => {
+      let speed = (Math.random() * 150).toFixed(1);
+      netVal.textContent = speed + ' MB/s';
+    }, 2000);
+  }
+}
+document.addEventListener('DOMContentLoaded', initWidgets);
